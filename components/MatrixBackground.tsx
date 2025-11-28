@@ -1,16 +1,21 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 const JAPANESE_CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
 
 export function MatrixBackground() {
-  const chars = useMemo(() => {
-    const count = 500; // Número de caracteres
-    return Array.from({ length: count }, () =>
+  const [chars, setChars] = useState<string[]>([]);
+
+  useEffect(() => {
+    const count = 500;
+    const generated = Array.from({ length: count }, () =>
       JAPANESE_CHARS[Math.floor(Math.random() * JAPANESE_CHARS.length)]
     );
+    setChars(generated);
   }, []);
+
+  if (chars.length === 0) return null;
 
   return (
     <div className="matrix-bg" aria-hidden="true">
