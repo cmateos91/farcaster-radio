@@ -7,13 +7,13 @@
   "miniapp": {
     "version": "1",
     "name": "Farcaster Radio",
-    "iconUrl": "https://TU_DOMINIO.vercel.app/icon.png",
-    "homeUrl": "https://TU_DOMINIO.vercel.app",
-    "splashImageUrl": "https://TU_DOMINIO.vercel.app/splash.png",
+    "iconUrl": "https://farcaster-radio.vercel.app/icon.png",
+    "homeUrl": "https://farcaster-radio.vercel.app",
+    "splashImageUrl": "https://farcaster-radio.vercel.app/splash.png",
     "splashBackgroundColor": "#0a0a0a",
     "description": "Live audio streaming on Farcaster. Create your own radio station or tune in to others.",
     "tagline": "Your voice, your station",
     "requiredChains": ["eip155:8453"],
-    "webhookUrl": "https://TU_DOMINIO.vercel.app/api/webhook"
+    "webhookUrl": "https://farcaster-radio.vercel.app/api/webhook"
   }
 }
