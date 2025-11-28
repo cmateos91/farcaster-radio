@@ -252,14 +252,15 @@ export default function Home() {
             <span className="text-sm font-medium text-gray-300">Go Live</span>
           </div>
 
-          <input
-            type="text"
-            placeholder="Name your station..."
-            value={stationTitle}
-            onChange={(e) => setStationTitle(e.target.value)}
-            className="w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.07] transition-all text-base"
-            maxLength={30}
-          />
+          <div className="input-fancy">
+            <input
+              type="text"
+              placeholder="Name your station..."
+              value={stationTitle}
+              onChange={(e) => setStationTitle(e.target.value)}
+              maxLength={30}
+            />
+          </div>
 
           <button
             onClick={startBroadcasting}

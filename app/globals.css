@@ -266,6 +266,128 @@ body {
   }
 }
 
+/* Fancy input styling */
+.input-fancy {
+  position: relative;
+  width: 100%;
+  padding: 3px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.input-fancy input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 1rem 1rem 3rem;
+  font-size: 1rem;
+  width: 100%;
+  border-radius: 1.3rem;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+  z-index: 2;
+}
+
+.input-fancy input:focus {
+  outline: none;
+  border-color: #a855f7;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 20px rgba(168, 85, 247, 0.4);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.input-fancy input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.input-fancy input:focus::placeholder {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+/* Emoji icon */
+.input-fancy::after {
+  content: "🎙️";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  z-index: 3;
+  transition: all 0.3s ease;
+}
+
+@keyframes emoji-dance {
+  0%, 100% { transform: translateY(-50%) rotate(0deg); }
+  25% { transform: translateY(-50%) rotate(-15deg) scale(1.1); }
+  75% { transform: translateY(-50%) rotate(15deg) scale(1.1); }
+}
+
+.input-fancy:hover::after {
+  animation: emoji-dance 0.5s ease infinite;
+}
+
+.input-fancy:focus-within::after {
+  content: "🔥";
+  animation: emoji-dance 0.3s ease infinite;
+}
+
+/* Rotating gradient border */
+.input-fancy::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #a855f7,
+    #ec4899,
+    #f43f5e,
+    #f97316,
+    #eab308,
+    #22c55e,
+    #06b6d4,
+    #3b82f6,
+    #a855f7
+  );
+  animation: rotate-gradient 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.input-fancy:hover::before,
+.input-fancy:focus-within::before {
+  opacity: 1;
+}
+
+@keyframes rotate-gradient {
+  100% { transform: rotate(360deg); }
+}
+
+/* Shockwave on focus */
+@keyframes input-shockwave {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4);
+  }
+  70% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 15px rgba(168, 85, 247, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+  }
+}
+
+.input-fancy:focus-within {
+  animation: input-shockwave 0.5s ease-out;
+}
+
 /* Touch optimizations */
 button, a {
   -webkit-tap-highlight-color: transparent;
