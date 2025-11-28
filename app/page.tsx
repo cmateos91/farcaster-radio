@@ -245,8 +245,8 @@ export default function Home() {
           </div>
         )}
 
-        {/* Main Card */}
-        <div className="glass rounded-3xl p-5 mb-4">
+        {/* Go Live Section */}
+        <div className="mb-6">
           <div className="flex items-center gap-2 mb-4">
             <Zap className="w-4 h-4 text-purple-400" />
             <span className="text-sm font-medium text-gray-300">Go Live</span>
@@ -283,7 +283,7 @@ export default function Home() {
         {/* Explore Link */}
         <Link
           href="/explore"
-          className="glass rounded-2xl p-4 flex items-center justify-between group hover:bg-white/[0.07] transition-all"
+          className="rounded-2xl p-4 flex items-center justify-between group hover:bg-white/[0.05] transition-all"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-pink-500/20 flex items-center justify-center">
