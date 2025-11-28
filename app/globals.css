@@ -155,8 +155,64 @@ button, a {
   --lk-bg2: rgba(255, 255, 255, 0.05) !important;
   --lk-control-bg: rgba(255, 255, 255, 0.1) !important;
   --lk-control-hover-bg: rgba(255, 255, 255, 0.15) !important;
+  --lk-border-color: rgba(255, 255, 255, 0.1) !important;
+  --lk-fg: white !important;
 }
 
 .lk-control-bar {
   background: transparent !important;
+  padding: 0 !important;
+  gap: 12px !important;
+  justify-content: center !important;
+}
+
+.lk-control-bar .lk-button {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+.lk-control-bar .lk-button:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  transform: scale(1.05);
+}
+
+.lk-control-bar .lk-button:active {
+  transform: scale(0.95);
+}
+
+.lk-control-bar .lk-button[data-lk-muted="true"] {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.lk-control-bar .lk-button svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* Hide LiveKit default UI elements that don't fit mobile */
+.lk-room-container {
+  background: transparent !important;
+}
+
+.lk-participant-tile {
+  background: transparent !important;
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 640px) {
+  .lk-control-bar {
+    flex-wrap: nowrap !important;
+  }
+
+  .lk-control-bar .lk-button {
+    width: 52px !important;
+    height: 52px !important;
+  }
 }
