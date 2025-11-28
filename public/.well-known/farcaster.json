@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "GENERA_ESTO_EN_FARCASTER_DEVELOPER_TOOLS",
-    "payload": "GENERA_ESTO_EN_FARCASTER_DEVELOPER_TOOLS",
-    "signature": "GENERA_ESTO_EN_FARCASTER_DEVELOPER_TOOLS"
+    "header": "eyJmaWQiOjE0NzgwMzAsInR5cGUiOiJhdXRoIiwia2V5IjoiMHg3RTA0YkY2OTBFOTQ1ODY0NURCYzg1NEVmNjYwNmNjRDkwZEMyNUYzIn0",
+    "payload": "eyJkb21haW4iOiJmYXJjYXN0ZXItcmFkaW8udmVyY2VsLmFwcCJ9",
+    "signature": "vAd2E3EXd+ms40CS4HvAfPrZfpkoUX5zXO+AG9uC98Yi3lOOXp4tpVp+8307tH+eNHu5VWUfJnkBzgKtkiRfLhs="
   },
   "miniapp": {
     "version": "1",
