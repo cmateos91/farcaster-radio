@@ -3,7 +3,7 @@
 import { LiveKitRoom, RoomAudioRenderer, useTracks, useRemoteParticipants } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import '@livekit/components-styles';
-import { DonationButton } from '@/components/wallet/DonationButton';
+import { TipButton } from '@/components/wallet/DonationButton';
 import { ShareButton } from './ShareButton';
 import { AudioVisualizer } from './Visualizer';
 import { type RoomMetadata } from '@/lib/farcaster';
@@ -139,18 +139,18 @@ function PlayerContent({
                         <AudioVisualizer />
                     </div>
 
-                    {/* Donation */}
+                    {/* Tip */}
                     {broadcasterWallet ? (
                         <div className="glass rounded-2xl p-3 sm:p-4 w-full max-w-[300px] sm:max-w-sm">
                             <div className="flex items-center gap-2 mb-2 sm:mb-3">
                                 <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-pink-400" />
-                                <span className="text-xs sm:text-sm text-gray-300">Support the host</span>
+                                <span className="text-xs sm:text-sm text-gray-300">Tip the host</span>
                             </div>
-                            <DonationButton recipientAddress={broadcasterWallet} />
+                            <TipButton recipientAddress={broadcasterWallet} />
                         </div>
                     ) : (
                         <p className="text-[10px] sm:text-xs text-gray-600">
-                            Donations not available
+                            Tips not available
                         </p>
                     )}
                 </div>

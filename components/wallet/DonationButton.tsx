@@ -2,10 +2,10 @@
 
 import { useSendTransaction, useAccount, useConnect } from 'wagmi';
 import { parseEther } from 'viem';
-import { Loader2, Gift } from 'lucide-react';
+import { Loader2, Coins } from 'lucide-react';
 import { useEffect } from 'react';
 
-export function DonationButton({ recipientAddress }: { recipientAddress: `0x${string}` }) {
+export function TipButton({ recipientAddress }: { recipientAddress: `0x${string}` }) {
     const { isConnected } = useAccount();
     const { connect, connectors, isPending: isConnecting } = useConnect();
     const { sendTransaction, isPending: isSending } = useSendTransaction();
@@ -17,7 +17,7 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
         }
     }, [isConnected, connectors, connect]);
 
-    const handleDonate = () => {
+    const handleTip = () => {
         if (!isConnected) {
             // Intentar conectar con el primer conector disponible
             if (connectors.length > 0) {
@@ -28,7 +28,7 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
 
         sendTransaction({
             to: recipientAddress,
-            value: parseEther('0.001'),
+            value: parseEther('0.0001'),
         });
     };
 
@@ -36,7 +36,7 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
 
     return (
         <button
-            onClick={handleDonate}
+            onClick={handleTip}
             disabled={isPending}
             className="w-full btn-gradient"
         >
@@ -45,8 +45,8 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
                     <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                     <>
-                        <Gift className="w-4 h-4" style={{ color: '#ec4899' }} />
-                        {isConnected ? 'Send 0.001 ETH' : 'Connect & Donate'}
+                        <Coins className="w-4 h-4" style={{ color: '#ec4899' }} />
+                        {isConnected ? 'Tip 0.0001 ETH' : 'Connect & Tip'}
                     </>
                 )}
             </span>
