@@ -271,19 +271,12 @@ export default function Home() {
         {/* Explore Link */}
         <Link
           href="/explore"
-          className="rounded-2xl p-4 flex items-center justify-between group hover:bg-white/[0.05] transition-all"
+          className="w-full btn-gradient"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-pink-500/20 flex items-center justify-center">
-              <Headphones className="w-5 h-5 text-pink-400" />
-            </div>
-            <p className="font-medium text-sm">Explore Stations</p>
-          </div>
-          <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-all">
-            <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
+          <span>
+            <Headphones className="w-5 h-5" />
+            Explore Stations
+          </span>
         </Link>
 
       </div>
