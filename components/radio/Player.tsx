@@ -7,7 +7,7 @@ import { DonationButton } from '@/components/wallet/DonationButton';
 import { ShareButton } from './ShareButton';
 import { AudioVisualizer } from './Visualizer';
 import { type RoomMetadata } from '@/lib/farcaster';
-import { X, Users, Volume2, VolumeX, Heart, Headphones } from 'lucide-react';
+import { X, Users, Volume2, VolumeX, Volume1, Heart, Headphones } from 'lucide-react';
 import { useState } from 'react';
 
 interface PlayerProps {
@@ -28,11 +28,14 @@ function PlayerContent({
 }) {
     const tracks = useTracks([Track.Source.Microphone]);
     const participants = useRemoteParticipants();
-    const [isMuted, setIsMuted] = useState(false);
+    const [volume, setVolume] = useState(0.8);
 
     const isLive = tracks.length > 0;
     const listenerCount = participants.length;
     const broadcasterWallet = metadata?.ownerWallet as `0x${string}` | undefined;
+    const isMuted = volume === 0;
+
+    const VolumeIcon = isMuted ? VolumeX : volume < 0.5 ? Volume1 : Volume2;
 
     return (
         <div className="min-h-dvh bg-[#030014] bg-mesh text-white overflow-hidden">
@@ -108,21 +111,27 @@ function PlayerContent({
                             <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-400" />
                             <span className="font-semibold text-sm sm:text-base">{listenerCount + 1}</span>
                         </div>
+                    </div>
 
+                    {/* Volume control */}
+                    <div className="glass rounded-2xl px-4 py-3 flex items-center gap-3 mb-6 sm:mb-8">
                         <button
-                            onClick={() => setIsMuted(!isMuted)}
-                            className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all active:scale-95 ${
-                                isMuted
-                                    ? 'bg-red-500/20 border border-red-500/30'
-                                    : 'glass'
+                            onClick={() => setVolume(isMuted ? 0.8 : 0)}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all active:scale-95 ${
+                                isMuted ? 'text-red-400' : 'text-white'
                             }`}
                         >
-                            {isMuted ? (
-                                <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-                            ) : (
-                                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                            )}
+                            <VolumeIcon className="w-5 h-5" />
                         </button>
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={(e) => setVolume(parseFloat(e.target.value))}
+                            className="volume-slider"
+                        />
                     </div>
 
                     {/* Visualizer */}
@@ -147,7 +156,7 @@ function PlayerContent({
                 </div>
             </div>
 
-            <RoomAudioRenderer muted={isMuted} />
+            <RoomAudioRenderer muted={isMuted} volume={volume} />
         </div>
     );
 }
