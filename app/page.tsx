@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Broadcaster } from '@/components/radio/Broadcaster';
 import { Player } from '@/components/radio/Player';
 import { useFarcaster } from '@/components/providers';
@@ -21,6 +21,60 @@ export default function Home() {
   const username = user?.username || user?.displayName || `anon-${Math.floor(Math.random() * 1000)}`;
   const userFid = user?.fid || 0;
 
+  // Función para unirse como listener
+  const joinAsListener = useCallback(async (targetRoom: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Obtener info de la sala para metadata
+      const roomsRes = await fetch('/api/rooms');
+      const roomsData = await roomsRes.json();
+      const roomInfo = roomsData.rooms?.find((r: { name: string }) => r.name === targetRoom);
+
+      const res = await fetch('/api/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          room: targetRoom,
+          username,
+          role: 'listener',
+          fid: userFid,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Failed to join station');
+
+      if (data.token) {
+        setToken(data.token);
+        setRoomName(targetRoom);
+        setRoomMetadata(roomInfo?.metadata || null);
+        setRole('listener');
+        // Limpiar URL
+        window.history.replaceState({}, '', '/');
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to join');
+      window.history.replaceState({}, '', '/');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [username, userFid]);
+
+  // Detectar parámetro ?join= en la URL
+  useEffect(() => {
+    if (!isReady) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const joinRoom = params.get('join');
+
+    if (joinRoom) {
+      joinAsListener(joinRoom);
+    }
+  }, [isReady, joinAsListener]);
+
   if (!isReady) {
     return (
       <main className="flex min-h-dvh flex-col items-center justify-center bg-[#030014] bg-mesh">
@@ -29,6 +83,19 @@ export default function Home() {
           <Loader2 className="relative w-10 h-10 animate-spin text-purple-400" />
         </div>
         <p className="mt-6 text-gray-400 text-sm">Loading...</p>
+      </main>
+    );
+  }
+
+  // Mostrar loading mientras se une a una sala
+  if (isLoading) {
+    return (
+      <main className="flex min-h-dvh flex-col items-center justify-center bg-[#030014] bg-mesh">
+        <div className="relative">
+          <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full" />
+          <Loader2 className="relative w-10 h-10 animate-spin text-purple-400" />
+        </div>
+        <p className="mt-6 text-gray-400 text-sm">Joining station...</p>
       </main>
     );
   }
