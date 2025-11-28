@@ -1,14 +1,22 @@
 'use client';
 
-import { useSendTransaction, useAccount, useConnect } from 'wagmi';
+import { useSendCalls, useAccount, useConnect } from 'wagmi';
 import { parseEther } from 'viem';
 import { Loader2, Coins } from 'lucide-react';
 import { useEffect } from 'react';
 
+// Dev wallet for 10% fee
+const DEV_WALLET = '0x7E04bF690E9458645DBc854Ef6606ccD90dC25F3' as const;
+
+// Tip amounts
+const TIP_AMOUNT = parseEther('0.0001');        // Total: 0.0001 ETH
+const BROADCASTER_AMOUNT = parseEther('0.00009'); // 90% to broadcaster
+const DEV_FEE = parseEther('0.00001');            // 10% to dev
+
 export function TipButton({ recipientAddress }: { recipientAddress: `0x${string}` }) {
     const { isConnected } = useAccount();
     const { connect, connectors, isPending: isConnecting } = useConnect();
-    const { sendTransaction, isPending: isSending } = useSendTransaction();
+    const { sendCalls, isPending: isSending } = useSendCalls();
 
     // Auto-conectar al montar si no está conectado
     useEffect(() => {
@@ -26,9 +34,18 @@ export function TipButton({ recipientAddress }: { recipientAddress: `0x${string}
             return;
         }
 
-        sendTransaction({
-            to: recipientAddress,
-            value: parseEther('0.0001'),
+        // Send batch transaction: 90% to broadcaster, 10% to dev
+        sendCalls({
+            calls: [
+                {
+                    to: recipientAddress,
+                    value: BROADCASTER_AMOUNT,
+                },
+                {
+                    to: DEV_WALLET,
+                    value: DEV_FEE,
+                },
+            ],
         });
     };
 
