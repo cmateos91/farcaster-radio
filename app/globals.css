@@ -333,40 +333,6 @@ body {
   animation: emoji-dance 0.3s ease infinite;
 }
 
-/* Rotating gradient border */
-.input-fancy::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    #a855f7,
-    #ec4899,
-    #f43f5e,
-    #f97316,
-    #eab308,
-    #22c55e,
-    #06b6d4,
-    #3b82f6,
-    #a855f7
-  );
-  animation: rotate-gradient 3s linear infinite;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.input-fancy:hover::before,
-.input-fancy:focus-within::before {
-  opacity: 1;
-}
-
-@keyframes rotate-gradient {
-  100% { transform: rotate(360deg); }
-}
 
 /* Shockwave on focus */
 @keyframes input-shockwave {
