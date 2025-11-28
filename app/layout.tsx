@@ -10,6 +10,10 @@ const audiowide = Audiowide({
 export const metadata: Metadata = {
   title: "TuneIn",
   description: "Live audio streaming on Farcaster",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: "TuneIn",
     description: "Live audio streaming on Farcaster. Create your own radio station or tune in to others.",
