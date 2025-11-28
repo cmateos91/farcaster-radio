@@ -40,7 +40,7 @@ export async function createRoom(roomName: string, metadata?: string) {
         await roomService.createRoom({
             name: roomName,
             metadata: metadata,
-            emptyTimeout: 60 * 5, // 5 minutos sin participantes
+            emptyTimeout: 30, // 30 segundos sin participantes
             maxParticipants: 100,
         });
     } catch (error) {

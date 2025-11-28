@@ -14,9 +14,9 @@ export async function GET(req: NextRequest) {
     try {
         const rooms = await listRooms();
 
-        // Filtrar solo salas de radio y parsear metadata
+        // Filtrar solo salas de radio activas (con participantes) y parsear metadata
         const radioRooms: RoomInfo[] = rooms
-            .filter(room => room.name.startsWith('radio-'))
+            .filter(room => room.name.startsWith('radio-') && room.numParticipants > 0)
             .map(room => {
                 const metadata = room.metadata
                     ? parseRoomMetadata(room.metadata)
