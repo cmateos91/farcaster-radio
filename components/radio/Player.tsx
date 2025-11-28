@@ -79,7 +79,7 @@ function PlayerContent({
                                 <img
                                     src={metadata.ownerPfpUrl}
                                     alt=""
-                                    className="relative w-28 h-28 rounded-full border-4 border-purple-500/50 shadow-2xl"
+                                    className="relative w-28 h-28 rounded-full border-4 border-purple-500/50 shadow-2xl object-cover"
                                 />
                             </>
                         ) : (

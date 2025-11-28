@@ -145,7 +145,7 @@ function StationCard({ room }: { room: RoomInfo }) {
                     <img
                         src={room.metadata.ownerPfpUrl}
                         alt=""
-                        className="w-14 h-14 rounded-xl border-2 border-purple-500/30"
+                        className="w-14 h-14 rounded-xl border-2 border-purple-500/30 object-cover flex-shrink-0"
                     />
                 ) : (
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/20">
