@@ -147,14 +147,16 @@ body {
 /* Animated gradient button */
 .btn-gradient {
   border: none;
-  border-radius: 20px;
+  border-radius: 16px;
   background: linear-gradient(32deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
   background-size: 300% 300%;
   animation: gradient-shift 3s ease infinite;
   font-weight: bold;
   letter-spacing: 0.02rem;
-  padding: 2px;
+  padding: 3px;
   transition: all 0.3s ease;
+  display: block;
+  overflow: hidden;
 }
 
 .btn-gradient:hover {
@@ -179,18 +181,17 @@ body {
   gap: 8px;
   padding: 14px 28px;
   font-size: 15px;
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.7);
+  border-radius: 13px;
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: all 0.3s ease;
-  height: 100%;
-  width: 100%;
   color: white;
+  box-sizing: border-box;
 }
 
 .btn-gradient:hover span {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .btn-gradient-sm span {
