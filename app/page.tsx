@@ -5,11 +5,11 @@ import { Broadcaster } from '@/components/radio/Broadcaster';
 import { Player } from '@/components/radio/Player';
 import { useFarcaster } from '@/components/providers';
 import { generateRoomName, type RoomMetadata } from '@/lib/farcaster';
-import { Radio, Headphones, Loader2, Mic, Zap } from 'lucide-react';
+import { Radio, Headphones, Loader2, Mic } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
-  const { isReady, user, isInMiniApp } = useFarcaster();
+  const { isReady, user } = useFarcaster();
   const [role, setRole] = useState<'broadcaster' | 'listener' | null>(null);
   const [roomName, setRoomName] = useState('');
   const [stationTitle, setStationTitle] = useState('');
@@ -196,15 +196,8 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10 flex flex-col min-h-dvh px-5 py-6 safe-top safe-bottom">
         {/* Header */}
-        <header className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/25">
-              <Radio className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-bold text-lg">Radio</span>
-          </div>
-
-          {user && (
+        {user && (
+          <header className="flex justify-end mb-8">
             <div className="glass rounded-full px-3 py-1.5 flex items-center gap-2">
               {user.pfpUrl && (
                 <img
@@ -218,8 +211,8 @@ export default function Home() {
                 @{user.username}
               </span>
             </div>
-          )}
-        </header>
+          </header>
+        )}
 
         {/* Hero */}
         <div className="flex-1 flex flex-col items-center justify-center text-center mb-8">
@@ -247,11 +240,6 @@ export default function Home() {
 
         {/* Go Live Section */}
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Zap className="w-4 h-4 text-purple-400" />
-            <span className="text-sm font-medium text-gray-300">Go Live</span>
-          </div>
-
           <div className="input-fancy">
             <input
               type="text"
@@ -301,10 +289,6 @@ export default function Home() {
           </div>
         </Link>
 
-        {/* Footer */}
-        <p className="mt-6 text-center text-xs text-gray-600">
-          {isInMiniApp ? 'Running in Warpcast' : 'Open in Warpcast for full experience'}
-        </p>
       </div>
     </main>
   );
