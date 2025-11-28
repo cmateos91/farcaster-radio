@@ -1,6 +1,6 @@
 'use client';
 
-import { LiveKitRoom, RoomAudioRenderer, useTracks, useRemoteParticipants } from '@livekit/components-react';
+import { LiveKitRoom, RoomAudioRenderer, useTracks, useRemoteParticipants, StartAudio } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import '@livekit/components-styles';
 import { TipButton } from '@/components/wallet/DonationButton';
@@ -157,6 +157,7 @@ function PlayerContent({
             </div>
 
             <RoomAudioRenderer muted={isMuted} volume={volume} />
+            <StartAudio label="Tap to enable audio" />
         </div>
     );
 }

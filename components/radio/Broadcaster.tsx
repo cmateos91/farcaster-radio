@@ -1,14 +1,15 @@
 'use client';
 
-import { LiveKitRoom, RoomAudioRenderer, ControlBar, useRemoteParticipants } from '@livekit/components-react';
+import { LiveKitRoom, RoomAudioRenderer, ControlBar, useRemoteParticipants, useLocalParticipant, StartAudio } from '@livekit/components-react';
 import '@livekit/components-styles';
 import { AudioVisualizer } from './Visualizer';
 import { ShareButton } from './ShareButton';
-import { Mic, X, Users, Radio } from 'lucide-react';
+import { Mic, MicOff, X, Users, Radio } from 'lucide-react';
 import { type RoomMetadata } from '@/lib/farcaster';
 import { RoomOptions, AudioPresets } from 'livekit-client';
+import { useEffect, useState } from 'react';
 
-// Opciones optimizadas para voz de alta calidad
+// Opciones optimizadas para voz - simplificadas para mejor compatibilidad móvil
 const roomOptions: RoomOptions = {
   audioCaptureDefaults: {
     autoGainControl: true,
@@ -16,9 +17,9 @@ const roomOptions: RoomOptions = {
     noiseSuppression: true,
   },
   publishDefaults: {
-    audioPreset: AudioPresets.speech,  // Preset optimizado para voz
-    dtx: true,                          // Transmisión discontinua (ahorra ancho de banda en silencios)
-    red: true,                          // Redundant encoding (mejor calidad en redes con pérdida)
+    audioPreset: AudioPresets.speech,
+    dtx: true,
+    red: true,
   },
 };
 
@@ -41,7 +42,28 @@ function BroadcasterContent({
     onLeave: () => void;
 }) {
     const participants = useRemoteParticipants();
+    const { localParticipant, isMicrophoneEnabled } = useLocalParticipant();
     const listenerCount = participants.length;
+    const [micError, setMicError] = useState<string | null>(null);
+
+    // Activar micrófono explícitamente al conectar (importante para móvil)
+    useEffect(() => {
+        const enableMic = async () => {
+            if (localParticipant && !isMicrophoneEnabled) {
+                try {
+                    await localParticipant.setMicrophoneEnabled(true);
+                    setMicError(null);
+                } catch (error) {
+                    console.error('Error enabling microphone:', error);
+                    setMicError('Could not access microphone');
+                }
+            }
+        };
+
+        // Pequeño delay para asegurar que la conexión está establecida
+        const timer = setTimeout(enableMic, 500);
+        return () => clearTimeout(timer);
+    }, [localParticipant, isMicrophoneEnabled]);
 
     return (
         <div className="min-h-dvh bg-[#030014] bg-mesh text-white overflow-hidden">
@@ -62,10 +84,22 @@ function BroadcasterContent({
                         <X className="w-5 h-5" />
                     </button>
 
-                    <div className="glass rounded-full px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-2 animate-pulse">
-                        <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-red-500 rounded-full" />
-                        <span className="text-xs sm:text-sm font-semibold text-red-400">ON AIR</span>
-                    </div>
+                    {micError ? (
+                        <div className="glass rounded-full px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-2">
+                            <MicOff className="w-3 h-3 text-red-500" />
+                            <span className="text-xs sm:text-sm font-semibold text-red-400">MIC ERROR</span>
+                        </div>
+                    ) : isMicrophoneEnabled ? (
+                        <div className="glass rounded-full px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-2 animate-pulse">
+                            <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-red-500 rounded-full" />
+                            <span className="text-xs sm:text-sm font-semibold text-red-400">ON AIR</span>
+                        </div>
+                    ) : (
+                        <div className="glass rounded-full px-3 sm:px-4 py-1.5 sm:py-2 flex items-center gap-2">
+                            <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-yellow-500 rounded-full animate-pulse" />
+                            <span className="text-xs sm:text-sm font-semibold text-yellow-400">CONNECTING...</span>
+                        </div>
+                    )}
 
                     <ShareButton roomName={roomName} title={metadata.title} />
                 </header>
@@ -84,12 +118,34 @@ function BroadcasterContent({
 
                     {/* Mic icon with glow */}
                     <div className="relative mb-6 sm:mb-8">
-                        <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-pink-500 rounded-full blur-2xl sm:blur-3xl opacity-40 scale-125 sm:scale-150" />
-                        <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center border border-red-500/30 animate-pulse-glow">
-                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center shadow-2xl">
-                                <Mic className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${isMicrophoneEnabled ? 'from-red-500 to-pink-500' : 'from-gray-500 to-gray-600'} rounded-full blur-2xl sm:blur-3xl opacity-40 scale-125 sm:scale-150`} />
+                        <button
+                            onClick={async () => {
+                                if (localParticipant) {
+                                    try {
+                                        await localParticipant.setMicrophoneEnabled(true);
+                                        setMicError(null);
+                                    } catch (error) {
+                                        console.error('Error enabling microphone:', error);
+                                        setMicError('Could not access microphone');
+                                    }
+                                }
+                            }}
+                            className={`relative w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br ${isMicrophoneEnabled ? 'from-red-500/20 to-pink-500/20 border-red-500/30' : 'from-gray-500/20 to-gray-600/20 border-gray-500/30'} flex items-center justify-center border ${isMicrophoneEnabled ? 'animate-pulse-glow' : ''}`}
+                        >
+                            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br ${isMicrophoneEnabled ? 'from-red-500 to-pink-500' : 'from-gray-500 to-gray-600'} flex items-center justify-center shadow-2xl`}>
+                                {isMicrophoneEnabled ? (
+                                    <Mic className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                                ) : (
+                                    <MicOff className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                                )}
                             </div>
-                        </div>
+                        </button>
+                        {!isMicrophoneEnabled && (
+                            <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-yellow-400 whitespace-nowrap">
+                                Tap to enable mic
+                            </p>
+                        )}
                     </div>
 
                     {/* Stats */}
@@ -132,6 +188,7 @@ function BroadcasterContent({
             </div>
 
             <RoomAudioRenderer />
+            <StartAudio label="Click to enable audio" />
         </div>
     );
 }
