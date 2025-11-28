@@ -6,6 +6,21 @@ import { AudioVisualizer } from './Visualizer';
 import { ShareButton } from './ShareButton';
 import { Mic, X, Users, Radio } from 'lucide-react';
 import { type RoomMetadata } from '@/lib/farcaster';
+import { RoomOptions } from 'livekit-client';
+
+// Opciones optimizadas para voz de alta calidad
+const roomOptions: RoomOptions = {
+  audioCaptureDefaults: {
+    autoGainControl: true,
+    echoCancellation: true,
+    noiseSuppression: true,
+  },
+  publishDefaults: {
+    audioBitrate: 64_000,  // 64kbps - alta calidad para voz
+    dtx: true,             // Transmisión discontinua (ahorra ancho de banda en silencios)
+    red: true,             // Redundant encoding (mejor calidad en redes con pérdida)
+  },
+};
 
 interface BroadcasterProps {
     roomName: string;
@@ -144,6 +159,7 @@ export function Broadcaster({ roomName, username, token, serverUrl, metadata, on
             audio={true}
             token={token}
             serverUrl={serverUrl}
+            options={roomOptions}
             data-lk-theme="default"
             style={{ height: '100dvh' }}
             onDisconnected={onLeave}
