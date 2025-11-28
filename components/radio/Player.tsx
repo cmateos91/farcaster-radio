@@ -98,7 +98,7 @@ function PlayerContent({
 
                     <div className="text-center mb-4 sm:mb-6 px-4">
                         <h1 className="text-xl sm:text-2xl font-bold mb-1 text-gradient truncate max-w-[260px] sm:max-w-none">
-                            {metadata?.title || 'Farcaster Radio'}
+                            {metadata?.title || 'TuneIn'}
                         </h1>
                         <p className="text-gray-400 text-xs sm:text-sm">
                             Hosted by @{metadata?.ownerUsername || 'anonymous'}

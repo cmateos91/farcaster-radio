@@ -224,7 +224,7 @@ export default function Home() {
           </div>
 
           <h1 className="text-3xl font-bold mb-2">
-            <span className="text-gradient">Farcaster Radio</span>
+            <span className="text-gradient">TuneIn</span>
           </h1>
           <p className="text-gray-400 text-sm max-w-[260px]">
             Create your own radio station and broadcast live to the Farcaster community

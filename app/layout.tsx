@@ -5,10 +5,10 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Farcaster Radio",
+  title: "TuneIn",
   description: "Live audio streaming on Farcaster",
   openGraph: {
-    title: "Farcaster Radio",
+    title: "TuneIn",
     description: "Live audio streaming on Farcaster. Create your own radio station or tune in to others.",
     images: ["https://farcaster-radio.vercel.app/splash.png"],
   },
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
       version: "next",
       imageUrl: "https://farcaster-radio.vercel.app/splash.png",
       button: {
-        title: "Open Radio",
+        title: "Open TuneIn",
         action: {
           type: "launch_frame",
-          name: "Farcaster Radio",
+          name: "TuneIn",
           url: "https://farcaster-radio.vercel.app",
           splashImageUrl: "https://farcaster-radio.vercel.app/splash.png",
           splashBackgroundColor: "#0a0a0a",

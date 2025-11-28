@@ -120,7 +120,7 @@ export async function notifyBroadcastStart(
         const success = await sendNotification(
             token,
             `${broadcasterUsername} is live!`,
-            `Tune in to "${stationTitle}" on Farcaster Radio`,
+            `Tune in to "${stationTitle}" on TuneIn`,
             `${appUrl}/?join=${encodeURIComponent(roomName)}`,
             notificationId
         );

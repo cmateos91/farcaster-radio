@@ -15,7 +15,7 @@ export function ShareButton({ roomName, title }: ShareButtonProps) {
 
     const handleShare = async () => {
         const shareUrl = `${appUrl}/listen/${roomName}`;
-        const shareText = `Tune in to "${title}" on Farcaster Radio!`;
+        const shareText = `Tune in to "${title}" on TuneIn!`;
 
         if (isInMiniApp) {
             try {

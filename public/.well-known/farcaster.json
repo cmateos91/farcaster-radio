@@ -6,7 +6,7 @@
   },
   "miniapp": {
     "version": "1",
-    "name": "Farcaster Radio",
+    "name": "TuneIn",
     "iconUrl": "https://farcaster-radio.vercel.app/icon.png",
     "homeUrl": "https://farcaster-radio.vercel.app",
     "splashImageUrl": "https://farcaster-radio.vercel.app/splash.png",
