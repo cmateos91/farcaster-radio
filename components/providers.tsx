@@ -51,34 +51,42 @@ export function Providers({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const initFarcaster = async () => {
             try {
-                // Detectar si estamos en un cliente Farcaster
-                const isInMiniApp = typeof window !== 'undefined' &&
-                    (window.location.search.includes('miniApp=true') ||
-                     window.parent !== window);
+                // Primero intentamos obtener el contexto del SDK
+                const context = await sdk.context;
+
+                console.log('Farcaster SDK context:', context);
 
                 let user = null;
+                let isInMiniApp = false;
 
-                if (isInMiniApp) {
-                    const context = await sdk.context;
-                    if (context?.user) {
-                        // El SDK puede usar diferentes nombres para custody address
-                        const userContext = context.user as {
-                            fid: number;
-                            username?: string;
-                            displayName?: string;
-                            pfpUrl?: string;
-                            custodyAddress?: string;
-                            custody_address?: string;
-                        };
+                if (context?.user) {
+                    isInMiniApp = true;
 
-                        user = {
-                            fid: userContext.fid,
-                            username: userContext.username,
-                            displayName: userContext.displayName,
-                            pfpUrl: userContext.pfpUrl,
-                            custodyAddress: userContext.custodyAddress || userContext.custody_address,
-                        };
+                    const u = context.user;
+
+                    // Intentar obtener la wallet del usuario via el provider
+                    let walletAddress: string | undefined;
+                    try {
+                        const provider = await sdk.wallet.getEthereumProvider();
+                        if (provider) {
+                            const accounts = await provider.request({ method: 'eth_accounts' }) as string[];
+                            if (accounts && accounts.length > 0) {
+                                walletAddress = accounts[0];
+                            }
+                        }
+                    } catch (e) {
+                        console.log('Could not get wallet:', e);
                     }
+
+                    user = {
+                        fid: u.fid,
+                        username: u.username,
+                        displayName: u.displayName || u.username,
+                        pfpUrl: u.pfpUrl,
+                        custodyAddress: walletAddress,
+                    };
+
+                    console.log('Farcaster user detected:', user);
                 }
 
                 // CRITICO: Llamar ready() para ocultar splash screen
@@ -91,7 +99,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 });
             } catch (error) {
                 console.error('Error initializing Farcaster SDK:', error);
-                // Marcamos como ready para no bloquear la app fuera de Farcaster
+                try {
+                    await sdk.actions.ready();
+                } catch {
+                    // Ignorar si falla
+                }
                 setFarcasterState(prev => ({ ...prev, isReady: true }));
             }
         };
