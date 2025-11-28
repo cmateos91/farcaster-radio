@@ -10,8 +10,8 @@ const katakana = [
   'ド', 'バ', 'ビ', 'ブ', 'ベ', 'ボ', 'パ', 'ピ', 'プ', 'ペ', 'ポ'
 ];
 
-// Generate 600 characters for the grid (covers most screens)
-const characters = Array.from({ length: 600 }, (_, i) => katakana[i % katakana.length]);
+// Generate enough characters for large screens (2000+ covers 1920x1080 at 32px grid)
+const characters = Array.from({ length: 2000 }, (_, i) => katakana[i % katakana.length]);
 
 export function MatrixBackground() {
   return (
