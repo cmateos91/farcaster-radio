@@ -6,7 +6,7 @@ import { AudioVisualizer } from './Visualizer';
 import { ShareButton } from './ShareButton';
 import { Mic, X, Users, Radio } from 'lucide-react';
 import { type RoomMetadata } from '@/lib/farcaster';
-import { RoomOptions } from 'livekit-client';
+import { RoomOptions, AudioPresets } from 'livekit-client';
 
 // Opciones optimizadas para voz de alta calidad
 const roomOptions: RoomOptions = {
@@ -16,9 +16,9 @@ const roomOptions: RoomOptions = {
     noiseSuppression: true,
   },
   publishDefaults: {
-    audioBitrate: 64_000,  // 64kbps - alta calidad para voz
-    dtx: true,             // Transmisión discontinua (ahorra ancho de banda en silencios)
-    red: true,             // Redundant encoding (mejor calidad en redes con pérdida)
+    audioPreset: AudioPresets.speech,  // Preset optimizado para voz
+    dtx: true,                          // Transmisión discontinua (ahorra ancho de banda en silencios)
+    red: true,                          // Redundant encoding (mejor calidad en redes con pérdida)
   },
 };
 
