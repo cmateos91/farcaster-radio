@@ -20,6 +20,7 @@ export default function Home() {
   const [roomMetadata, setRoomMetadata] = useState<RoomMetadata | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isAnonymous, setIsAnonymous] = useState(false);
 
   const username = user?.username || user?.displayName || `anon-${Math.floor(Math.random() * 1000)}`;
   const userFid = user?.fid || 0;
@@ -118,9 +119,9 @@ export default function Home() {
 
       const metadata: RoomMetadata = {
         ownerFid: userFid,
-        ownerUsername: user?.username,
-        ownerDisplayName: user?.displayName,
-        ownerPfpUrl: user?.pfpUrl,
+        ownerUsername: isAnonymous ? 'anon' : user?.username,
+        ownerDisplayName: isAnonymous ? 'Anonymous' : user?.displayName,
+        ownerPfpUrl: isAnonymous ? undefined : user?.pfpUrl,
         ownerWallet: walletAddress,
         title: stationTitle,
         createdAt: Date.now(),
@@ -233,6 +234,17 @@ export default function Home() {
               maxLength={30}
             />
           </div>
+
+          {/* Anonymous toggle */}
+          <label className="cyberpunk-checkbox-label">
+            <input
+              type="checkbox"
+              checked={isAnonymous}
+              onChange={(e) => setIsAnonymous(e.target.checked)}
+              className="cyberpunk-checkbox"
+            />
+            Broadcast anonymously
+          </label>
 
           <button
             onClick={startBroadcasting}
