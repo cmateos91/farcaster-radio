@@ -28,17 +28,18 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
         <button
             onClick={handleDonate}
             disabled={isPending}
-            className="w-full py-3.5 rounded-xl font-semibold text-sm transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50"
-            style={{ background: 'linear-gradient(135deg, #ec4899, #f43f5e)' }}
+            className="w-full btn-gradient"
         >
-            {isPending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-                <>
-                    <Gift className="w-4 h-4" />
-                    Send 0.001 ETH
-                </>
-            )}
+            <span>
+                {isPending ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                    <>
+                        <Gift className="w-4 h-4" />
+                        Send 0.001 ETH
+                    </>
+                )}
+            </span>
         </button>
     );
 }

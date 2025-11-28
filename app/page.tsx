@@ -264,13 +264,9 @@ export default function Home() {
           <button
             onClick={startBroadcasting}
             disabled={isLoading || !stationTitle.trim()}
-            className="w-full mt-4 py-4 rounded-2xl font-semibold text-base transition-all relative overflow-hidden group disabled:opacity-50"
-            style={{
-              background: 'linear-gradient(135deg, #a855f7, #ec4899)',
-            }}
+            className="w-full mt-4 btn-gradient"
           >
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform" />
-            <span className="relative flex items-center justify-center gap-2">
+            <span>
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (

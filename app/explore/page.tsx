@@ -111,10 +111,9 @@ export default function ExplorePage() {
                         </p>
                         <Link
                             href="/"
-                            className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-2xl font-semibold text-xs sm:text-sm active:scale-95 transition-transform"
-                            style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}
+                            className="btn-gradient btn-gradient-sm"
                         >
-                            Start Your Station
+                            <span>Start Your Station</span>
                         </Link>
                     </div>
                 ) : (
@@ -178,17 +177,18 @@ function StationCard({ room }: { room: RoomInfo }) {
                 <button
                     onClick={handleJoin}
                     disabled={isJoining}
-                    className="w-10 h-10 sm:w-auto sm:h-auto sm:px-4 sm:py-2.5 rounded-full sm:rounded-xl font-semibold text-xs sm:text-sm transition-all active:scale-95 flex items-center justify-center gap-2 flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, #a855f7, #ec4899)' }}
+                    className="btn-gradient btn-gradient-sm flex-shrink-0"
                 >
-                    {isJoining ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                        <>
-                            <Headphones className="w-4 h-4" />
-                            <span className="hidden sm:inline">Join</span>
-                        </>
-                    )}
+                    <span className="!py-2 !px-3 sm:!py-2.5 sm:!px-4">
+                        {isJoining ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                            <>
+                                <Headphones className="w-4 h-4" />
+                                <span className="hidden sm:inline">Join</span>
+                            </>
+                        )}
+                    </span>
                 </button>
             </div>
         </div>
