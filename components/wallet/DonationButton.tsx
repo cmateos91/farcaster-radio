@@ -3,17 +3,25 @@
 import { useSendTransaction, useAccount, useConnect } from 'wagmi';
 import { parseEther } from 'viem';
 import { Loader2, Gift } from 'lucide-react';
+import { useEffect } from 'react';
 
 export function DonationButton({ recipientAddress }: { recipientAddress: `0x${string}` }) {
     const { isConnected } = useAccount();
-    const { connect, connectors } = useConnect();
-    const { sendTransaction, isPending } = useSendTransaction();
+    const { connect, connectors, isPending: isConnecting } = useConnect();
+    const { sendTransaction, isPending: isSending } = useSendTransaction();
+
+    // Auto-conectar al montar si no está conectado
+    useEffect(() => {
+        if (!isConnected && connectors.length > 0) {
+            connect({ connector: connectors[0] });
+        }
+    }, [isConnected, connectors, connect]);
 
     const handleDonate = () => {
         if (!isConnected) {
-            const connector = connectors.find(c => c.id === 'farcaster-frame');
-            if (connector) {
-                connect({ connector });
+            // Intentar conectar con el primer conector disponible
+            if (connectors.length > 0) {
+                connect({ connector: connectors[0] });
             }
             return;
         }
@@ -23,6 +31,8 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
             value: parseEther('0.001'),
         });
     };
+
+    const isPending = isConnecting || isSending;
 
     return (
         <button
@@ -35,8 +45,8 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
                     <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                     <>
-                        <Gift className="w-4 h-4" />
-                        Send 0.001 ETH
+                        <Gift className="w-4 h-4" style={{ color: '#ec4899' }} />
+                        {isConnected ? 'Send 0.001 ETH' : 'Connect & Donate'}
                     </>
                 )}
             </span>

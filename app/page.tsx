@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Broadcaster } from '@/components/radio/Broadcaster';
 import { Player } from '@/components/radio/Player';
 import { useFarcaster } from '@/components/providers';
+import { useWalletAddress } from '@/hooks/useWalletAddress';
 import { generateRoomName, type RoomMetadata } from '@/lib/farcaster';
 import { Loader2, Mic, Radio, Headphones } from 'lucide-react';
 import Link from 'next/link';
@@ -11,6 +12,7 @@ import { MatrixBackground } from '@/components/MatrixBackground';
 
 export default function Home() {
   const { isReady, user } = useFarcaster();
+  const { address: walletAddress } = useWalletAddress();
   const [role, setRole] = useState<'broadcaster' | 'listener' | null>(null);
   const [roomName, setRoomName] = useState('');
   const [stationTitle, setStationTitle] = useState('');
@@ -119,7 +121,7 @@ export default function Home() {
         ownerUsername: user?.username,
         ownerDisplayName: user?.displayName,
         ownerPfpUrl: user?.pfpUrl,
-        ownerWallet: user?.custodyAddress,
+        ownerWallet: walletAddress,
         title: stationTitle,
         createdAt: Date.now(),
       };
