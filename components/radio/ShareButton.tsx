@@ -27,12 +27,9 @@ export function ShareButton({ roomName, title }: ShareButtonProps) {
                 console.error('Error sharing to cast:', error);
             }
         } else {
-            // Fallback: copiar al clipboard
             try {
                 await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
-                alert('Link copied to clipboard!');
             } catch {
-                // Fallback para navegadores que no soportan clipboard API
                 window.open(
                     `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${encodeURIComponent(shareUrl)}`,
                     '_blank'
@@ -44,7 +41,7 @@ export function ShareButton({ roomName, title }: ShareButtonProps) {
     return (
         <button
             onClick={handleShare}
-            className="p-2 bg-gray-800/50 hover:bg-gray-700/50 rounded-full transition-colors"
+            className="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-all active:scale-95"
             title="Share"
         >
             <Share2 className="w-5 h-5" />

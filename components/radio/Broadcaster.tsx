@@ -4,7 +4,7 @@ import { LiveKitRoom, RoomAudioRenderer, ControlBar, useRemoteParticipants } fro
 import '@livekit/components-styles';
 import { AudioVisualizer } from './Visualizer';
 import { ShareButton } from './ShareButton';
-import { Mic, X, Users, Share2 } from 'lucide-react';
+import { Mic, X, Users, Radio } from 'lucide-react';
 import { type RoomMetadata } from '@/lib/farcaster';
 
 interface BroadcasterProps {
@@ -29,72 +29,90 @@ function BroadcasterContent({
     const listenerCount = participants.length;
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-br from-gray-900 to-black text-white">
-            {/* Header */}
-            <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
-                <button
-                    onClick={onLeave}
-                    className="p-2 bg-gray-800/50 hover:bg-gray-700/50 rounded-full transition-colors"
-                >
-                    <X className="w-5 h-5" />
-                </button>
-
-                <div className="flex items-center gap-2 bg-red-500/20 px-4 py-2 rounded-full border border-red-500/50 animate-pulse">
-                    <div className="w-3 h-3 bg-red-500 rounded-full" />
-                    <span className="font-bold text-red-500 tracking-wider text-sm">ON AIR</span>
-                </div>
-
-                <ShareButton roomName={roomName} title={metadata.title} />
+        <div className="min-h-dvh bg-[#030014] bg-mesh text-white overflow-hidden">
+            {/* Background effects */}
+            <div className="fixed inset-0 pointer-events-none">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-[150px]" />
+                <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[120px]" />
             </div>
 
-            {/* Info de la estacion */}
-            <div className="text-center space-y-2 mt-16">
-                <h1 className="text-3xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-                    {metadata.title}
-                </h1>
-                <p className="text-gray-400 font-medium">
-                    @{metadata.ownerUsername || 'anonymous'}
-                </p>
-            </div>
+            {/* Content */}
+            <div className="relative z-10 flex flex-col min-h-dvh px-5 py-6 safe-top safe-bottom">
+                {/* Header */}
+                <header className="flex items-center justify-between mb-6">
+                    <button
+                        onClick={onLeave}
+                        className="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-all active:scale-95"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
 
-            {/* Icono del microfono */}
-            <div className="relative group my-8">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
-                <div className="relative p-8 bg-black rounded-full border-4 border-gray-800">
-                    <Mic className="w-16 h-16 text-white" />
-                </div>
-            </div>
-
-            {/* Visualizador y stats */}
-            <div className="flex flex-col items-center gap-4 w-full max-w-md px-4">
-                <div className="w-full bg-gray-800/50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
-                    <div className="flex justify-between items-center mb-4">
-                        <span className="text-gray-400 text-sm uppercase tracking-wider font-semibold">Signal</span>
-                        <span className="text-green-400 text-sm font-mono">LIVE</span>
+                    <div className="glass rounded-full px-4 py-2 flex items-center gap-2 animate-pulse">
+                        <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />
+                        <span className="text-sm font-semibold text-red-400">ON AIR</span>
                     </div>
-                    <AudioVisualizer />
+
+                    <ShareButton roomName={roomName} title={metadata.title} />
+                </header>
+
+                {/* Main content */}
+                <div className="flex-1 flex flex-col items-center justify-center">
+                    {/* Station info */}
+                    <div className="text-center mb-8">
+                        <h1 className="text-2xl font-bold mb-1 text-gradient">
+                            {metadata.title}
+                        </h1>
+                        <p className="text-gray-400 text-sm">
+                            @{metadata.ownerUsername || 'anonymous'}
+                        </p>
+                    </div>
+
+                    {/* Mic icon with glow */}
+                    <div className="relative mb-8">
+                        <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-pink-500 rounded-full blur-3xl opacity-40 scale-150" />
+                        <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center border border-red-500/30 animate-pulse-glow">
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center shadow-2xl">
+                                <Mic className="w-10 h-10 text-white" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Stats */}
+                    <div className="glass rounded-2xl px-6 py-4 flex items-center gap-6 mb-8">
+                        <div className="flex items-center gap-2">
+                            <Users className="w-5 h-5 text-purple-400" />
+                            <span className="font-bold text-xl">{listenerCount}</span>
+                            <span className="text-gray-400 text-sm">listening</span>
+                        </div>
+                    </div>
+
+                    {/* Visualizer */}
+                    <div className="w-full max-w-sm glass rounded-2xl p-5">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-2">
+                                <Radio className="w-4 h-4 text-purple-400" />
+                                <span className="text-sm text-gray-400">Audio Signal</span>
+                            </div>
+                            <span className="text-xs text-green-400 font-mono">LIVE</span>
+                        </div>
+                        <AudioVisualizer />
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-gray-400 bg-gray-800/30 px-6 py-3 rounded-full">
-                    <Users className="w-5 h-5" />
-                    <span className="font-bold text-white text-lg">{listenerCount}</span>
-                    <span>Listeners</span>
-                </div>
-            </div>
-
-            {/* Controles de microfono */}
-            <div className="fixed bottom-8 w-full max-w-md px-4">
-                <div className="bg-gray-900/90 backdrop-blur-md rounded-2xl p-2 border border-gray-800 shadow-2xl">
-                    <ControlBar
-                        variation="minimal"
-                        controls={{
-                            microphone: true,
-                            camera: false,
-                            screenShare: false,
-                            chat: false,
-                            leave: false,
-                        }}
-                    />
+                {/* Bottom controls */}
+                <div className="mt-auto pt-6">
+                    <div className="glass rounded-3xl p-3">
+                        <ControlBar
+                            variation="minimal"
+                            controls={{
+                                microphone: true,
+                                camera: false,
+                                screenShare: false,
+                                chat: false,
+                                leave: false,
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -104,7 +122,6 @@ function BroadcasterContent({
 }
 
 export function Broadcaster({ roomName, username, token, serverUrl, metadata, onLeave }: BroadcasterProps) {
-    // Enviar notificaciones cuando se conecta
     const handleConnected = async () => {
         try {
             await fetch('/api/notify', {
@@ -128,7 +145,7 @@ export function Broadcaster({ roomName, username, token, serverUrl, metadata, on
             token={token}
             serverUrl={serverUrl}
             data-lk-theme="default"
-            style={{ height: '100vh' }}
+            style={{ height: '100dvh' }}
             onDisconnected={onLeave}
             onConnected={handleConnected}
         >

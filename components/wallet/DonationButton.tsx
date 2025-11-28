@@ -2,7 +2,7 @@
 
 import { useSendTransaction, useAccount, useConnect } from 'wagmi';
 import { parseEther } from 'viem';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Gift } from 'lucide-react';
 
 export function DonationButton({ recipientAddress }: { recipientAddress: `0x${string}` }) {
     const { isConnected } = useAccount();
@@ -20,7 +20,7 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
 
         sendTransaction({
             to: recipientAddress,
-            value: parseEther('0.001'), // ~ $3-4 USD
+            value: parseEther('0.001'),
         });
     };
 
@@ -28,10 +28,17 @@ export function DonationButton({ recipientAddress }: { recipientAddress: `0x${st
         <button
             onClick={handleDonate}
             disabled={isPending}
-            className="flex items-center gap-2 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-full font-bold transition-all shadow-lg hover:shadow-pink-500/30"
+            className="w-full py-3.5 rounded-xl font-semibold text-sm transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50"
+            style={{ background: 'linear-gradient(135deg, #ec4899, #f43f5e)' }}
         >
-            {isPending ? <Loader2 className="animate-spin" /> : '🎁'}
-            Donate 0.001 ETH
+            {isPending ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+                <>
+                    <Gift className="w-4 h-4" />
+                    Send 0.001 ETH
+                </>
+            )}
         </button>
     );
 }
