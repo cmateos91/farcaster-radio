@@ -13,9 +13,23 @@ export const metadata: Metadata = {
     images: ["https://farcaster-radio.vercel.app/splash.png"],
   },
   other: {
+    "fc:miniapp": JSON.stringify({
+      version: "1",
+      imageUrl: "https://farcaster-radio.vercel.app/embed.png",
+      button: {
+        title: "Open TuneIn",
+        action: {
+          type: "launch_miniapp",
+          name: "TuneIn",
+          url: "https://farcaster-radio.vercel.app",
+          splashImageUrl: "https://farcaster-radio.vercel.app/splash.png",
+          splashBackgroundColor: "#0a0a0a",
+        },
+      },
+    }),
     "fc:frame": JSON.stringify({
-      version: "next",
-      imageUrl: "https://farcaster-radio.vercel.app/splash.png",
+      version: "1",
+      imageUrl: "https://farcaster-radio.vercel.app/embed.png",
       button: {
         title: "Open TuneIn",
         action: {
