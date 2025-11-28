@@ -144,24 +144,22 @@ body {
   display: none;
 }
 
-/* Animated gradient button */
+/* Subtle gradient button */
 .btn-gradient {
   border: none;
   border-radius: 16px;
-  background: linear-gradient(32deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-  background-size: 300% 300%;
-  animation: gradient-shift 3s ease infinite;
-  font-weight: bold;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.5), rgba(236, 72, 153, 0.5));
+  font-weight: 600;
   letter-spacing: 0.02rem;
-  padding: 3px;
+  padding: 2px;
   transition: all 0.3s ease;
   display: block;
   overflow: hidden;
 }
 
 .btn-gradient:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 30px rgba(244, 65, 165, 0.4);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.7), rgba(236, 72, 153, 0.7));
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
 }
 
 .btn-gradient:active {
@@ -181,8 +179,8 @@ body {
   gap: 8px;
   padding: 14px 28px;
   font-size: 15px;
-  border-radius: 13px;
-  background: rgba(0, 0, 0, 0.75);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: all 0.3s ease;
@@ -191,18 +189,12 @@ body {
 }
 
 .btn-gradient:hover span {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .btn-gradient-sm span {
   padding: 10px 20px;
   font-size: 13px;
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 /* Volume slider */
