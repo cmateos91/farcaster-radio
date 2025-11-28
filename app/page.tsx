@@ -140,7 +140,12 @@ export default function Home() {
           {user && (
             <div className="glass rounded-full px-3 py-1.5 flex items-center gap-2">
               {user.pfpUrl && (
-                <img src={user.pfpUrl} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
+                <img
+                  src={user.pfpUrl}
+                  alt=""
+                  className="rounded-full object-cover flex-shrink-0"
+                  style={{ width: '24px', height: '24px', minWidth: '24px', minHeight: '24px', maxWidth: '24px', maxHeight: '24px' }}
+                />
               )}
               <span className="text-sm text-gray-300 max-w-[100px] truncate">
                 @{user.username}
