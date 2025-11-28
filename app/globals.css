@@ -148,18 +148,20 @@ body {
 .btn-gradient {
   border: none;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.5), rgba(236, 72, 153, 0.5));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3));
   font-weight: 600;
   letter-spacing: 0.02rem;
   padding: 2px;
   transition: all 0.3s ease;
   display: block;
   overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .btn-gradient:hover {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.7), rgba(236, 72, 153, 0.7));
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.5), rgba(236, 72, 153, 0.5));
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
 }
 
 .btn-gradient:active {
